@@ -1,0 +1,22 @@
+LakeSnes PS5 port
+=================
+This is a port of LakeSnes for jailbroken PS5s.
+
+Prerequisites
+-------------
+- A PS5 running ps5-payload-shsrv v0.7 or later, an FTP server such as
+  ps5-payload-ftpsrv, and a user logged in on the PS5 GUI.
+
+Installation
+------------
+- Copy lakesnes.elf to: /data/LakeSnes/lakesnes.elf
+- Copy SMC roms to: /data/LakeSnes/roms/
+- Login to shsrv on port 2323 using a telnet client configured for UNIX
+  linebreaks. On GNU/Linux systems, you can just type "telnet <PS5HOST> 2323"
+  in a terminal.
+- Once logged in, launch a GAME by running the command:
+    "hbldr /data/LakeSnes/lakesnes.elf /data/LakeSnes/roms/GAME.smc"
+
+Known limitations
+-----------------
+Some games run a bit slow.

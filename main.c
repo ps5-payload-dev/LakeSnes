@@ -71,9 +71,9 @@ static void playAudio(void);
 static void renderScreen(void);
 static void handleInput(int keyCode, bool pressed);
 
-int main(int argc, char** argv) {
+int SDL_main(int argc, char** argv) {
   // set up SDL
-  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) != 0) {
     printf("Failed to init SDL: %s\n", SDL_GetError());
     return 1;
   }
@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
     printf("Failed to create window: %s\n", SDL_GetError());
     return 1;
   }
-  glb.renderer = SDL_CreateRenderer(glb.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  glb.renderer = SDL_CreateRenderer(glb.window, -1, SDL_RENDERER_PRESENTVSYNC);
   if(glb.renderer == NULL) {
     printf("Failed to create renderer: %s\n", SDL_GetError());
     return 1;
@@ -162,9 +162,69 @@ int main(int argc, char** argv) {
   uint64_t lastCount = SDL_GetPerformanceCounter();
   float timeAdder = 0.0;
 
+  for(int i=0; i<SDL_NumJoysticks(); i++) {
+    if (SDL_GameControllerOpen(i) == NULL) {
+      printf("SDL_GameControllerOpen(%i): %s\n", i, SDL_GetError());
+    }
+  }
+
   while(running) {
     while(SDL_PollEvent(&event)) {
       switch(event.type) {
+      case SDL_JOYBUTTONUP:
+      case SDL_JOYBUTTONDOWN: {
+	  switch(event.jbutton.button) {
+	  case SDL_CONTROLLER_BUTTON_DPAD_UP:
+	    snes_setButtonState(glb.snes, 1, 4, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+	    snes_setButtonState(glb.snes, 1, 5, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+	    snes_setButtonState(glb.snes, 1, 6, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+	    snes_setButtonState(glb.snes, 1, 7, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_START:
+	    snes_setButtonState(glb.snes, 1, 3, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_TOUCHPAD:
+	    snes_setButtonState(glb.snes, 1, 2, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_A:
+	    snes_setButtonState(glb.snes, 1, 8, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_B:
+	    snes_setButtonState(glb.snes, 1, 0, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_X:
+	    snes_setButtonState(glb.snes, 1, 9, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_Y:
+	    snes_setButtonState(glb.snes, 1, 1, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+	    snes_setButtonState(glb.snes, 1, 10, event.cbutton.state == SDL_PRESSED);
+	    break;
+
+	  case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+	    snes_setButtonState(glb.snes, 1, 11, event.cbutton.state == SDL_PRESSED);
+	    break;
+	  }
+	}
+	break;
+
         case SDL_KEYDOWN: {
           switch(event.key.keysym.sym) {
             case SDLK_r: snes_reset(glb.snes, false); break;

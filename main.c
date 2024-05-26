@@ -199,19 +199,19 @@ int SDL_main(int argc, char** argv) {
 	    break;
 
 	  case SDL_CONTROLLER_BUTTON_A:
-	    snes_setButtonState(glb.snes, 1, 8, event.cbutton.state == SDL_PRESSED);
-	    break;
-
-	  case SDL_CONTROLLER_BUTTON_B:
 	    snes_setButtonState(glb.snes, 1, 0, event.cbutton.state == SDL_PRESSED);
 	    break;
 
+	  case SDL_CONTROLLER_BUTTON_B:
+	    snes_setButtonState(glb.snes, 1, 8, event.cbutton.state == SDL_PRESSED);
+	    break;
+
 	  case SDL_CONTROLLER_BUTTON_X:
-	    snes_setButtonState(glb.snes, 1, 9, event.cbutton.state == SDL_PRESSED);
+	    snes_setButtonState(glb.snes, 1, 1, event.cbutton.state == SDL_PRESSED);
 	    break;
 
 	  case SDL_CONTROLLER_BUTTON_Y:
-	    snes_setButtonState(glb.snes, 1, 1, event.cbutton.state == SDL_PRESSED);
+	    snes_setButtonState(glb.snes, 1, 9, event.cbutton.state == SDL_PRESSED);
 	    break;
 
 	  case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:

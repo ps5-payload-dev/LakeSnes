@@ -21,7 +21,7 @@ else
 endif
 
 CFLAGS := -O3 -I ./snes -I ./zip \
-          `${PS5_SYSROOT}/bin/sdl2-config --cflags --libs` \
+          `${PS5_PAYLOAD_SDK}/bin/prospero-sdl2-config --cflags --libs` \
 	  -lkernel_sys -lSDL2main
 
 SRCS := snes/spc.c snes/dsp.c snes/apu.c snes/cpu.c snes/dma.c snes/ppu.c \

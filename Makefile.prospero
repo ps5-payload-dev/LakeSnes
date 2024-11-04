@@ -22,7 +22,7 @@ endif
 
 CFLAGS := -O3 -I ./snes -I ./zip \
           `${PS5_PAYLOAD_SDK}/bin/prospero-sdl2-config --cflags --libs` \
-	  -lkernel_sys -lSDL2main
+	  -lkernel_sys -lSDL2main -lSceSystemService
 
 SRCS := snes/spc.c snes/dsp.c snes/apu.c snes/cpu.c snes/dma.c snes/ppu.c \
         snes/cart.c snes/cx4.c snes/input.c snes/statehandler.c snes/snes.c \
